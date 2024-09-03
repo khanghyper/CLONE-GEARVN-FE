@@ -6,20 +6,20 @@ import SectionShipping from "@/app/(public)/cart/_components/section-shipping";
 import SectionStep from "@/app/(public)/cart/_components/section-step";
 import { useGlobalContext } from "@/context/store";
 import { ChevronLeft } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 
 const CartInfoPage = () => {
-  const {cartSteps, setCartSteps} = useGlobalContext();
+  const { cartSteps, setCartSteps } = useGlobalContext();
   const pathname = usePathname();
-  useEffect(() => {
-    if(pathname === '/cart/info') {
-      cartSteps[0].status = true;
-      setCartSteps([...cartSteps]);
-    }
-  }, [])
+  const router = useRouter()
+  const { data: session } = useSession();
+  if (session?.user) {
+    router.push('/cart/payment-order')
+  }
 
   return <>
     <div className='breadcrumb'>
@@ -34,7 +34,7 @@ const CartInfoPage = () => {
       <SectionStep />
       <SectionInfo />
       {/* <CouponBlock/> */}
-      <SectionShipping/>
+      <SectionShipping />
       <SectionInfoTotal href={'/cart/payment-order'} />
       {/* <EmptyCart/> */}
     </div>

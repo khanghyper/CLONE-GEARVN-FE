@@ -9,7 +9,7 @@ export default function BtnLogout() {
   const router = useRouter();
   const handleLogout = async () => {
     clientAccessToken.value = ''
-    router.push('/')
+    // router.push('/')
     await signOut({ callbackUrl: '/' })
   }
   return (

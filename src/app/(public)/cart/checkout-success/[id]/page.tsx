@@ -1,8 +1,7 @@
-import SectionInfoOrderLine from "@/app/(public)/cart/_components/section-info-order-line";
 import SectionStep from "@/app/(public)/cart/_components/section-step";
 import Link from "next/link";
 
-export default function CartCheckOutSuccess() {
+export default function SuccessOrderPage({ params }: { params: { id: string } }) {
   return (
     <>
       <div className="py-[30px]">
@@ -26,11 +25,12 @@ export default function CartCheckOutSuccess() {
               <div className="flex justify-between p-4 text-[16px] font-normal relative
                 after:contents-[''] after:w-[440px] after:h-[1px] after:bg-[#cecece] after:bottom-0 after:absolute
               ">
-                <h2>ĐƠN HÀNG<strong>#1E9800</strong></h2>
-                <Link href="/" className="text-[#1982F9]">Quản lý đơn hàng</Link>
+                <h2>ĐƠN HÀNG<strong>  #{params.id}</strong></h2>
               </div>
               <div className="p-4">
+                <div>
 
+                </div>
                 <div className="mt-4">
                   <span>
                     <span className="bg-[#FFF6ED] border border-dashed border-[#FF7A00] text-[#FF7A00] p-3 text-center block rounded">Đơn hàng chưa được thanh toán</span>

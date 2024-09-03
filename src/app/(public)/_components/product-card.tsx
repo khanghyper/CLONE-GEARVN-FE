@@ -1,6 +1,12 @@
 import { Product } from "@/app/(public)/_components/row-product";
 import { CpuIcon, FolderKanbanIcon, HardDriveIcon, MemoryStickIcon, SquareKanbanIcon, StarIcon, TruckIcon } from "lucide-react";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 
 type ProductProp = {
@@ -22,6 +28,13 @@ export const formatCurrentcy = (price: number) => {
   return cal.toLocaleString('vi', { style: 'currency', currency: 'VND' })
 }
 
+export const handleNameInProductCard = (str: string) => {
+  if (str.length > 40) {
+    return str.slice(0, 40) + '...'
+  }
+  return str;
+}
+
 export default function ProductCard(productProp: any) {
 
   return <>
@@ -36,7 +49,17 @@ export default function ProductCard(productProp: any) {
         <div className="pro-detail px-4 pt-[6px] pb-4">
           <div className="w-full h-6 pb-[10px]"></div>
           <div className="pro-name mb-[10px]">
-            <a href="#" className="font-semibold text-[14px]">{productProp.name}</a>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="#" className="font-semibold text-[14px]">{handleNameInProductCard(productProp.name)}</a>
+                </TooltipTrigger>
+                <TooltipContent className="bg-white border text-black">
+                  <p>{productProp.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
           </div>
           {/* <div className="pro-technical mb-2 bg-[#ECECEC] text-[#6D6E72] rounded-[2px] px-2 py-1 flex flex-wrap">
             <div className="pro-tecnical--line flex items-center mr-[10px]">
@@ -62,18 +85,18 @@ export default function ProductCard(productProp: any) {
           </div> */}
           <div className="pro-price mb-2">
             <div className="pro-price--compare">
-              {productProp.priceSale ? (
+              {productProp?.priceSale ? (
                 <del className="text-[13px] text-gray-500">{formatCurrentcy(productProp.price)}</del>
               ) : ''}
 
             </div>
             <div className="pro-price--default flex items-center">
-              {productProp.priceSale ? (
+              {productProp?.priceSale ? (
                 <span className="text-[red] font-semibold text-[16px]">{formatCurrentcy(productProp.priceSale)}</span>
               ) : (
                 <span className="text-[red] font-semibold text-[16px]">{formatCurrentcy(productProp.price)}</span>
               )}
-              {productProp.priceSale ? (
+              {productProp?.priceSale ? (
                 <span className="inline-block h-5 pro-label--on-sale border-[0.8px] border-[#E30019] px-2 ml-[10px] text-[#E30019] bg-[#FFEDED] rounded-[2px] text-[12px]">-{productProp.promotionPercentText}</span>
               ) : ''}
             </div>

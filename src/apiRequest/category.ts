@@ -8,11 +8,12 @@ const categoryApiRequest = {
       cache: 'no-cache'
     })
   },
-  findv1: () => {
-    return http.get<any>(`api/categories/v1`, {
+  getListForNav: () => {
+    return http.get<any>(`api/categories/for-nav`, {
       cache: 'no-cache'
     })
   },
+  getListCateForBreadCrumbs: (slug: string) => http.get<any>(`api/categories/category/for-breadcrumbs/${slug}`, { cache: 'no-cache' }),
   findById: (id: string) => http.get<any>(`api/categories/category/${id}`, {
     cache: 'no-cache'
   }),

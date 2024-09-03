@@ -11,20 +11,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Credentials({
       credentials: {
         email: {},
-        password: {}
+        password: {},
+        token: {}
       },
       authorize: async (credentials) => {
         try {
-          const { email, password } = credentials
-          const res = await authApiRequest.login({ email, password });
-          const accessToken = res.payload.data.access_token as string;
+          const { email, password, token } = credentials;
+          let accessToken = '';
+          if (!token) {
+            const res = await authApiRequest.login({ email, password });
+            accessToken = res.payload.data.access_token as string;
+          } else {
+            accessToken = token as string;
+          }
+
 
           const profile = await accountApiRequest.meInserver(accessToken);
-          console.log(profile);
           let user = profile.payload.data as IUser
           // if (user.role !== 'ADMIN') {
           //   throw new InvalidEmailPassword('Loi abx');
           // }
+
 
           return {
             ...user,

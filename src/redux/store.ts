@@ -4,11 +4,13 @@ import cartReducer from './slices/cart-slice';
 import accessTokenSlice from '@/redux/slices/access-token-slice';
 import productReducer from '@/redux/slices/product.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import filterProductReducer from '@/redux/slices/filter-product.slice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      cart: cartReducer
+      cart: cartReducer,
+      productFilter: filterProductReducer
     },
   })
 };

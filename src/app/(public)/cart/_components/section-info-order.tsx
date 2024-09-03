@@ -1,50 +1,69 @@
-import SectionInfoOrderLine from "@/app/(public)/cart/_components/section-info-order-line";
-
-export const info: {
-  infoKey: string;
-  infoValue: string | number
-}[] = [
-    {
-      infoKey: 'Khách hàng',
-      infoValue: 'Khang'
-    },
-    {
-      infoKey: 'Số điện thoại',
-      infoValue: '0398271294'
-    },
-    {
-      infoKey: 'Địa chỉ nhận hàng',
-      infoValue: '118, Phường 21, Quận Bình Thạnh, Hồ Chí Minh'
-    },
-    {
-      infoKey: 'Tạm tính',
-      infoValue: 890000
-    },
-    {
-      infoKey: 'Phí vận chuyển',
-      infoValue: 0
-    },
-    {
-      infoKey: 'Tổng tiền',
-      infoValue: 19990000
-    },
-]
+'use client'
+import { formatCurrentcy } from "@/app/(public)/_components/product-card";
+import { auth } from "@/auth";
+import { useAppSelector } from "@/redux/store";
+import { Dot } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function SectionInfoOrder() {
-  return (
-    <section className="p-6">
-      <div>
-        <div className="mb-2">
-          <h2 className="font-semibold text-[24px]">Thông tin đặt hàng</h2>
-        </div>
+  const { data: session } = useSession();
+  const totalPrice = useAppSelector(state => state.cart.totalPrice);
+  if (session?.user) {
+    return (
+      <section className="p-6">
         <div>
-          <div>
-            {info?.map((item, index) => (
-              <SectionInfoOrderLine size="order" key={index} infoKey={item.infoKey} infoValue={item.infoValue}/>
-            ))}
+          <div className="mb-2">
+            <h2 className="font-semibold text-[24px]">Thông tin đặt hàng</h2>
+          </div>
+          <div className="w-full flex flex-col gap-4 font-medium">
+            <div className="flex">
+              <div className="flex w-60">
+                <Dot />
+                <span>Khách hàng</span>
+              </div>
+              <div>{(session.user as any).name}</div>
+            </div>
+            <div className="flex">
+              <div className="flex w-60">
+                <Dot />
+                <span>Số điện thoại</span>
+              </div>
+              <div>{(session.user as any).phone}</div>
+            </div>
+            <div className="flex">
+              <div className="flex w-60">
+                <Dot />
+                <span>Địa chỉ nhận hàng</span>
+              </div>
+              <div>{(session.user as any).address}</div>
+            </div>
+            <div className="flex">
+              <div className="flex w-60">
+                <Dot />
+                <span>Tạm tính</span>
+              </div>
+              <div className="text-red-500">{formatCurrentcy(totalPrice)}</div>
+            </div>
+            <div className="flex">
+              <div className="flex w-60">
+                <Dot />
+                <span>Phí vận chuyển</span>
+              </div>
+              <div className="text-red-500">Miễn phí</div>
+            </div>
+            <div className="flex">
+              <div className="flex w-60">
+                <Dot />
+                <span>Tổng tiền</span>
+              </div>
+              <div className="text-red-500">{formatCurrentcy(totalPrice)}</div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  )
+      </section>
+    )
+  } else {
+    return null
+  }
+
 }

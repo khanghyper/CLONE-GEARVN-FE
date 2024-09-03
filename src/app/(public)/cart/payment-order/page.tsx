@@ -1,9 +1,11 @@
 
 
+import BtnCheckout from "@/app/(public)/cart/_components/btn-checkout";
 import CouponBlock from "@/app/(public)/cart/_components/coupon-block";
 import SectionInfoOrder from "@/app/(public)/cart/_components/section-info-order";
 import SectionInfoTotal from "@/app/(public)/cart/_components/section-info-total";
 import SectionStep from "@/app/(public)/cart/_components/section-step";
+import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -21,9 +23,7 @@ export default function CartPaymentOrder() {
       <div className="cart-main bg-white rounded-sm">
         <SectionStep />
         <SectionInfoOrder />
-        <CouponBlock />
-        <SectionInfoTotal href={'/cart/checkout-success'} />
-        {/* <EmptyCart/> */}
+        <BtnCheckout />
       </div>
     </>
   )

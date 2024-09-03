@@ -13,7 +13,7 @@ const Header = async () => {
   // const [name, setName] = useState<string>('')
   // const { data: session } = useSession()
   let name = await (session?.user as any)?.name;
-  // const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();  
 
 
   return (
@@ -92,7 +92,7 @@ const Header = async () => {
                         </span>
                       ) : (
                         <span className='text-[14px] font-medium'>
-                          <Link href={'auth/login'}>Đăng nhập</Link>
+                          <Link href={'/auth/login'}>Đăng nhập</Link>
                         </span>
                       )
                     }

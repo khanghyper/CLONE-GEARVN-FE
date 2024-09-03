@@ -33,12 +33,12 @@ export default function DanhMuc({ form }: { form: any }) {
 
   useEffect(() => {
     const getCategories = async () => {
-      try {
-        const response = await categoryApiRequest.findv1();
-        setCategories(response.payload.data);
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   const response = await categoryApiRequest.findv1();
+      //   setCategories(response.payload.data);
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
     getCategories();
   }, []);

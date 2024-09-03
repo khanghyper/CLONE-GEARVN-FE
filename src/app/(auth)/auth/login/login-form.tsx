@@ -22,6 +22,7 @@ export default function LoginForm() {
     const data = {
       email, password
     }
+
     const res = await authenticate(email, password);
     if (res?.error) {
       toast({
@@ -34,27 +35,31 @@ export default function LoginForm() {
     }
   }
 
+
   return (
-    <form onSubmit={handleSubmit} className="border w-96 p-8 rounded relative">
-      <div className='text-[18px] absolute -top-3 left-5 bg-white'>Đăng nhập</div>
-      <div className="py-2 flex gap-2 flex-col">
-        <Label>Email</Label>
-        <Input
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="shadcn@gmail.com"
-          value={email}
-        />
-      </div>
-      <div className="py-2 flex gap-2 flex-col">
-        <Label>Mật khẩu</Label>
-        <Input
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Mật khẩu"
-          type='password'
-          value={password}
-        />
-      </div>
-      <Button className="mt-4" type="submit">Đăng nhập</Button>
-    </form >
+    <>
+      <form onSubmit={handleSubmit} className="border w-96 p-8 rounded relative">
+        <div className='text-[18px] absolute -top-3 left-5 bg-white'>Đăng nhập</div>
+        <div className="py-2 flex gap-2 flex-col">
+          <Label>Email</Label>
+          <Input
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="shadcn@gmail.com"
+            value={email}
+          />
+        </div>
+        <div className="py-2 flex gap-2 flex-col">
+          <Label>Mật khẩu</Label>
+          <Input
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Mật khẩu"
+            type='password'
+            value={password}
+          />
+        </div>
+        <Button className="mt-4" type="submit">Đăng nhập</Button>
+      </form >
+      {/* <Button type='button' onClick={handleClick}>click</Button> */}
+    </>
   )
 }

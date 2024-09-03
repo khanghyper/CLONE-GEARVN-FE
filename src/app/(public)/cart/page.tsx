@@ -1,4 +1,3 @@
-'use client'
 
 import './style.css';
 import CouponBlock from '@/app/(public)/cart/_components/coupon-block';
@@ -7,30 +6,13 @@ import SectionOrder from '@/app/(public)/cart/_components/section-order';
 import SectionInfoTotal from '@/app/(public)/cart/_components/section-info-total';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useGlobalContext } from '@/context/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '@/redux/slices/cart-slice';
+import { auth } from '@/auth';
+import EmptyCart from '@/app/(public)/cart/_components/empty-cart';
 
 
-export default function CartPage() {
-  const { cartSteps, setCartSteps } = useGlobalContext();
+export default async function CartPage() {
+  const session = await auth();
 
-  const dispatch = useDispatch();
-  const cart = useSelector((state: any) => state.cart);
-  console.log(cart);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (window.location.pathname === '/cart') {
-        const newCartSteps = [...cartSteps].map(item => {
-          if (item.status) item.status = false;
-          return item;
-        });
-        setCartSteps([...newCartSteps]);
-      }
-    }
-  }, [])
 
   return <>
     <div className='breadcrumb'>
@@ -42,11 +24,16 @@ export default function CartPage() {
       </div>
     </div>
     <div className="cart-main bg-white rounded-sm">
-      <SectionStep />
-      <SectionOrder />
-      <CouponBlock />
-      <SectionInfoTotal href={'/cart/info'} />
-      {/* <EmptyCart/> */}
+      {session
+        ? (
+          <>
+            <SectionStep />
+            <SectionOrder />
+            <CouponBlock />
+            <SectionInfoTotal href={'/cart/info'} />
+          </>)
+        : (<EmptyCart />)
+      }
     </div>
   </>
 }
